@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    Rate Man (0.0.1)
+    rate_man (0.0.4)
+      active_support
 
 GEM
   remote: http://rubygems.org/
@@ -52,9 +53,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Rate Man!
   active_support
   rake (~> 0.9.2.2)
+  rate_man!
   rspec
   rspec-expectations
   rspec-http
