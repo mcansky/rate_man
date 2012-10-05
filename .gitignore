@@ -4,3 +4,4 @@ coverage
 spec/cassettes
 
 dev_config.yml
+*.gem
