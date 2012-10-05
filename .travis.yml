@@ -1,0 +1,17 @@
+language: ruby
+bundler_args: --without development
+script: "bundle exec rake spec"
+notifications:
+  email: false
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#arbousier-bots"
+    use_notice: true
+    template:
+      - "%{repository} (%{commit}) : %{message} %{build_url}"
+rvm:
+  - 1.9.3
+  - rbx-19mode
+  - 1.9.2
+
