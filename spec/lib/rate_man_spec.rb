@@ -4,9 +4,14 @@ require 'json'
 require 'open-uri'
 require 'yaml'
 
-config = YAML.load(File.open 'dev_config.yml')
-API_KEY = config['api_key']
-CUSTOM_SEARCH_ID = config['custom_search_id']
+if File.exist?('dev_config.yml')
+  config = YAML.load(File.open 'dev_config.yml')
+  API_KEY = config['api_key']
+  CUSTOM_SEARCH_ID = config['custom_search_id']
+else
+  API_KEY = "toto_api"
+  CUSTOM_SEARCH_ID = "toto_custom"
+end
 
 describe RateMan do
   context "test config setup" do
