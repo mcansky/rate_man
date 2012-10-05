@@ -2,6 +2,8 @@
 
 a little gem to get currency exchange rates from google.
 
+## How to use
+
     require 'rubygems'
     require 'rate_man'
 
