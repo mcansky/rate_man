@@ -4,9 +4,7 @@ desc 'Default: run specs.'
 task :default => :spec
 
 desc "Run specs"
-RSpec::Core::RakeTask.new do |task|
-  task.pattern = "**/spec/*_spec.rb"
- # task.rspec_opts << '-r ./rspec_config'
-  task.rspec_opts = '--color'
-  #task.rspec_opts << '-f documentation'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = 'spec/lib/*_spec.rb'
+  spec.rspec_opts = ['--backtrace']
 end
