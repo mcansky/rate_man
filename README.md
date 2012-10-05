@@ -2,6 +2,8 @@
 
 a little gem to get currency exchange rates from google.
 
+Yep it's using Travis : [![Build Status](https://travis-ci.org/mcansky/rate_man.png)](https://travis-ci.org/mcansky/rate_man)
+
 ## How to use
 
     require 'rubygems'
