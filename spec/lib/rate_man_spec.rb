@@ -32,12 +32,19 @@ describe RateMan do
     it { should_not respond_to(:query_url).with(3).arguments }
     it { should respond_to(:query_url).with(2).arguments }
 
+    it { should respond_to(:get).with(2).arguments }
+    it { should_not respond_to(:get).with(1).arguments }
+    it { should respond_to(:rate).with(2).arguments }
+
     it "should return a hash" do
       RateMan.query("EUR","CHF").class.should eq Array
     end
     it "should be able to build the query url" do
       query = "1 EUR to CHF"
       RateMan.query_url("EUR", "CHF").should eq "#{RateMan.google_api_url}?key=#{RateMan.api_key}&cx=#{RateMan.custom_search_id}&q=#{query.gsub(/\s/,"%20")}"
+    end
+    it "should be able to get a rate" do
+      JSON.parse(subject.get('EUR','CHF')).keys.should eq ["from_to", "from_cur", "to_cur", "rate", "inv_rate"]
     end
   end
 

@@ -1,5 +1,3 @@
-require "./lib/rate_man"
-
 module RateMan
   class CurrencyDuo
     attr_accessor :from, :to, :raw, :rate

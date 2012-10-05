@@ -1,6 +1,7 @@
 require 'json'
 require 'open-uri'
 require 'active_support/core_ext/module/attribute_accessors'
+require "./lib/currency_duo"
 
 module RateMan
 
@@ -27,4 +28,13 @@ module RateMan
   def self.query(from_cur, to_cur)
     JSON.parse(IO.read open(self.query_url(from_cur, to_cur)))['items'].first['snippet'].split('...').last.split(' ')
   end
+
+  def self.get(from_cur, to_cur)
+    RateMan::CurrencyDuo.new('EUR', 'CHF').query.json
+  end
+
+  class << self
+    alias_method :rate, :get
+  end
+
 end

@@ -10,6 +10,6 @@ a little gem to get currency exchange rates from google.
       config.custom_search_id = CUSTOM_SEARCH_ID
     end
 
-    RateMan::CurrencyDuo.new('EUR', 'CHF').query.json
+    RateMan.get('EUR', 'CHF')
 
 
