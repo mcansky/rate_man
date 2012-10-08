@@ -2,6 +2,7 @@ require 'json'
 require 'open-uri'
 require 'active_support/core_ext/module/attribute_accessors'
 require "./lib/currency_duo"
+require "currency_duo"
 
 module RateMan
 
