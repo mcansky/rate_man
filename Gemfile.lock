@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rate_man (0.0.4)
+    rate_man (0.0.6)
       active_support
 
 GEM

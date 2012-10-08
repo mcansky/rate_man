@@ -82,6 +82,13 @@ describe RateMan do
     it "should get an answer from google" do
       open(RateMan.query_url('EUR', 'CHF')).class.should eq Tempfile
     end
+    it "should get an answer from google" do
+      items = JSON.parse(RateMan.raw_response('EUR', 'CHF'))['items']
+      items.first['snippet'].split('...')[1].split(' ').class.should eq Array
+      result = items.first['snippet'].split('...')[1].gsub(/^\s/,'').gsub(/\s$/,'')
+      result.should match /\d EUR = \d*\.\d* CHF [-\+]?\d*\.\d* \([-\+]?\d*\.\d*\%\)/
+      # ["1", "EUR", "=", "1.2114", "CHF", "-0.00017", "(-0.014%)"]
+    end
     it "should get a json" do
       JSON.parse(IO.read open(RateMan.query_url('EUR', 'CHF'))).class.should eq Hash
     end

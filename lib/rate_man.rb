@@ -1,7 +1,6 @@
 require 'json'
 require 'open-uri'
 require 'active_support/core_ext/module/attribute_accessors'
-require "./lib/currency_duo"
 require "currency_duo"
 
 module RateMan
@@ -26,8 +25,17 @@ module RateMan
     self.custom_search_id = nil
   end
 
+  def self.raw_response(from_cur, to_cur)
+    IO.read open(self.query_url(from_cur, to_cur))
+  end
+
   def self.query(from_cur, to_cur)
-    JSON.parse(IO.read open(self.query_url(from_cur, to_cur)))['items'].first['snippet'].split('...').last.split(' ')
+    string = JSON.parse(RateMan.raw_response(from_cur, to_cur))['items'].first['snippet'].split('...')[1]
+    unless string =~ /\d EUR = \d*\.\d* CHF [-\+]?\d*\.\d* \([-\+]?\d*\.\d*\%\)/
+      puts string
+      raise ArgumentError, "incorrect json"
+    end
+    string.split(' ')
   end
 
   def self.get(from_cur, to_cur)

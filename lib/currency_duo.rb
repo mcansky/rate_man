@@ -14,6 +14,7 @@ module RateMan
 
     def hash
       raise ArgumentError, "you must query google for the rate first" unless rate && raw
+      raise ArgumentError, "rate or raw is not correct rate : #{rate} raw : #{raw}" if ((rate == 0) || (raw == 0))
       {from_to: from + ':' + to,
        from_cur: [1, from],
        to_cur: [rate, to],
