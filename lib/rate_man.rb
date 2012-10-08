@@ -30,9 +30,16 @@ module RateMan
   end
 
   def self.query(from_cur, to_cur)
-    string = JSON.parse(RateMan.raw_response(from_cur, to_cur))['items'].first['snippet'].split('...')[1]
-    unless string =~ /\d EUR = \d*\.\d* CHF [-\+]?\d*\.\d* \([-\+]?\d*\.\d*\%\)/
-      puts string
+    incorrect = true
+    acceptable_time = true
+    i = 0
+    while incorrect && acceptable_time
+      string = JSON.parse(RateMan.raw_response(from_cur, to_cur))['items'].first['snippet'].split('...')[1]
+      incorrect = false if string =~ /\d EUR = \d*\.\d* CHF [-\+]?\d*\.\d* \([-\+]?\d*\.\d*\%\)/
+      i += 1
+      acceptable_time = false if i > 5
+    end
+    if incorrect
       raise ArgumentError, "incorrect json"
     end
     string.split(' ')
