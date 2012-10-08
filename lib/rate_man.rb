@@ -10,6 +10,14 @@ module RateMan
 
   mattr_accessor :api_key, :google_api_url, :custom_search_id
 
+  def self.proper_line(snippet)
+    snippet.split('...').select { |l| RateMan.match(l.gsub(/^\s/,'').gsub(/\s$/,'')) }.first
+  end
+
+  def self.match(string)
+    string =~ /\d EUR = \d*\.\d* CHF [-\+]?\d*\.\d* \([-\+]?\d*\.\d*\%\)/
+  end
+
   def self.query_url(from_cur, to_cur)
     "#{@@google_api_url}?key=#{self.api_key}&cx=#{@@custom_search_id}&q=1%20#{from_cur}%20to%20#{to_cur}"
   end
@@ -30,19 +38,7 @@ module RateMan
   end
 
   def self.query(from_cur, to_cur)
-    incorrect = true
-    acceptable_time = true
-    i = 0
-    while incorrect && acceptable_time
-      string = JSON.parse(RateMan.raw_response(from_cur, to_cur))['items'].first['snippet'].split('...')[1]
-      incorrect = false if string =~ /\d EUR = \d*\.\d* CHF [-\+]?\d*\.\d* \([-\+]?\d*\.\d*\%\)/
-      i += 1
-      acceptable_time = false if i > 5
-    end
-    if incorrect
-      raise ArgumentError, "incorrect json"
-    end
-    string.split(' ')
+    RateMan.proper_line(JSON.parse(RateMan.raw_response(from_cur, to_cur))['items'].first['snippet']).split(' ')
   end
 
   def self.get(from_cur, to_cur)
